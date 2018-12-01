@@ -1,0 +1,50 @@
+---------------------IMAP via CURL--------------------
+$ sudo apt install libcurlpp-dev
+$ sudo apt install libcurl-openssl-dev
+
+$ curl-config --cflags
+$ curl-config --libs //cette commande donne l'endroit où est installée la lib
+
+Derrière, il faut compiler comme ça :
+$ clang++ -lcurl -g -Wall test.cpp
+
+
+------------------------openSSL-----------------------
+$ sudo apt install libssl-dev
+
+Il faut compiler avec -lcrypto du coup tant que je ne l'ai pas écrit dans le Makefile
+
+
+----------------------Qt en CLI-----------------------
+$ sudo apt install qtcreator
+$ sudo apt install qtbase5-dev (ou sinon libqt5opengl5-dev qui contient des dépendances si jamais le 1er marche pas)
+
+$ vim .bashrc
+rajouter la ligne : export QT_SELECT=qt5
+
+
+--------------------------GMP-------------------------
+Sur les machines unix, cette bibliothèque est déjà installée.
+
+Pour utiliser GMP, il faut ajouter dans les fichiers :
+#include <gmpxx.h>
+
+Compilation : $ g++ -g -Wall main.cpp -lgmpxx -lgmp
+
+Quelques fonctions :
+Permet d'obtenir le quotient de la division euclidienne de n par d
+void mpz_fdiv_q(mpz_t q, mpz_t n, mpz_t d);
+
+Permet d'obtenir le reste de la division euclidienne de n par d
+void mpz_fdiv_r(mpz_t r, mpz_t n, mpz_t d);
+
+Permet d'obtenir le quotient et le reste de la division euclidienne de n par d
+void mpz_fdiv_qr(mpz_t q, mpz_t r, mpz_t n, mpz_t d);
+
+Calcule le modulo en faisant r = n mod(d)
+void mpz_mod(mpz_t r, mpz_t n, mpz_t d);
+
+Calcule la puissance rop = base^exp. On peut utiliser get_ui() pour transformer un mpz_class
+en unsigned long int
+void mpz_pow_ui(mpz_t rop, mpz_t base, unsigned long int exp);
+

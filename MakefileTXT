@@ -1,0 +1,75 @@
+#--------------------VARIABLES--------------------#
+CC=clang++
+CFLAGS=-W -Wall -pedantic -std=c++11
+LDFLAGS=-lgmpxx -lgmp -lcrypto -lssl -lpthread
+EXEC=bin/Spoutnik
+#-------------GESTION DES EXECUTABLES-------------#
+m: $(EXEC)
+me: m
+	$(EXEC) m
+
+n: $(EXEC)
+ne: n
+	$(EXEC) n
+
+g: $(EXEC)
+ge: g
+	$(EXEC) g
+
+#------------GESTION DES DEPENDANCES--------------#
+$(EXEC): obj/main.o obj/Socket.o obj/Outils.o obj/Mail.o obj/BufferedReaderWriter.o obj/ReaderWriter.o obj/Utilisateur.o obj/Chiffrement.o obj/PrivateKeyGenerator.o obj/Dechiffrement.o
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
+
+obj/main.o: src/main.cpp
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/Chiffrement.o: src/Chiffrement.cpp include/Chiffrement.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/Dechiffrement.o: src/Dechiffrement.cpp include/Dechiffrement.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/PrivateKeyGenerator.o: src/PrivateKeyGenerator.cpp include/PrivateKeyGenerator.h include/Socket.h include/Outils.h include/rw/BufferedReaderWriter.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/Mail.o: src/Mail.cpp include/Mail.h include/rw/BufferedReaderWriter.h include/Chiffrement.h include/Dechiffrement.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/Socket.o: src/Socket.cpp include/Socket.h include/Outils.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/Outils.o: src/Outils.cpp include/Outils.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/BufferedReaderWriter.o: src/rw/BufferedReaderWriter.cpp include/rw/BufferedReaderWriter.h include/rw/ReaderWriter.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/ReaderWriter.o: src/rw/ReaderWriter.cpp include/rw/ReaderWriter.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+obj/Utilisateur.o: src/Utilisateur.cpp include/Utilisateur.h include/Mail.h include/Outils.h
+	$(CC) -o $@ -c $< $(CFLAGS)
+
+clean:
+	rm -rf obj/* doc/html/*
+
+veryclean: clean
+	rm -rf bin/*.app
+
+doc: include/* src/*
+	doxygen doc/image.doxy
+
+# Variables:
+# 	- $@: nom de la cible (avant les :)
+# 	- $<: nom de la premiére dependance (juste apres les :)
+# 	- $^: liste des dependances (tout ce qu'il y a aprés les :)
+# 	- $?: dependances plus récentes que la cible
+# 	- $*: nom du fichier sans le suffixe
+#
+# Rappels:
+# 	Pour executable:
+# 		nom_executable: tous les fichiers .o qui ont un lien avec l'executable
+# 			g++ -o nom_executable reprendre liste plus haute
+# 	Pour fichier objet:
+#			obj/exemple.o: exemple.cpp exemple.cpp et liste de tous les .h qui sont include
+#				g++ -o obj/exemple.o -c exemple.cpp

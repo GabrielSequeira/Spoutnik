@@ -1,0 +1,39 @@
+----------Cahier des charges----------
+
+Fonctionnalités:
+
+- Serveur :
+	- Générer Private Master Key et Public Master Key -> Initialisation
+	- Mettre en place un mode serveur (qui attend des clients)
+	- Générer les clés privées associées aux l'ID -> Extraction
+	- Envoyer les clés privées aux clients de manière sécurisés
+	- Lister à qui on a déjà envoyé des clés
+
+- Client :
+	- Chiffrement
+		- Générer la clé publique à partir de l'adresse mail à qui on envoie (nécessite la master public key)
+		- Fichier texte simple, puis PDF
+		- Faire les tests avec SageMaths
+		- Préparation de l'envoi (fiabilité ? checksum ?)
+	- Déchiffrement
+		- Vérifier la fiabilité
+		- Utilise la clé privé pour déchiffrer le message
+		- Créer un nouveau fichier qui correspond au message reçu
+
+Evolution du projet :
+
+1) Dans un premier temps, on travail en local avec trois entités (serveur, client émetteur, client récepteur).
+2) Evolution avec un client récepteur / émetteur
+3) Ajout d'un chiffrement hybride lors de l'envoi de la clé privée de l'utilisateur
+4) Evolution avec une mise en place en réseau, et non plus en local.
+5) Intégration sur thunderbird
+
+
+
+
+
+
+
+
+
+

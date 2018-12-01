@@ -6,7 +6,6 @@ Il a été créé par :
     - ALLAM Mourad (n° étudiant : 11509098), contact : mourad.allam@etu.univ-lyon1.fr
     - SEQUEIRA Gabriel (n° étudiant : 11508289), contact : gabriel.sequeira@etu.univ-lyon1.fr
 
-Adresse de dépôt forge : https://forge.univ-lyon1.fr/p1508330/Spoutnik.git
 
 ############################# DEVELOPPEMENT #############################
 
